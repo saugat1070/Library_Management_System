@@ -1,0 +1,6 @@
+psycopg2
+django
+djnagorestframewrok
+pillow
+markdown
+django-filter

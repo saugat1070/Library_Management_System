@@ -1,0 +1,20 @@
+# Ignore all files in the home directory
+~/
+
+# Ignore specific directories
+.anydesk/ .cache/ .config/ .dotnet/ .gnupg/ .local/ .oh-my-zsh/ .ssh/ 
+.vscode/ .thunderbird/ .pki/ .pgadmin/ .swt/ .streamlit/ .zsh_history 
+.zshrc .bash_history .bash_logout .bashrc .profile .pam_environment 
+.python_history .wget-hsts .zcompdump* .zcompdump-* .zcompdump*.zwc 
+.shell.pre-oh-my-zsh .sudo_as_admin_successful .gk/ .gnome/ .mongodb/ 
+.gitconfig .lesshst .swt/ .wget-hsts .zcompdump .zcompdump-* 
+.zcompdump*.zwc .zsh_history .zshrc
+
+# Ignore specific files
+libgraph-1.0.2.tar.gz master.zip microsoft.gpg
+
+# Ignore directories in the home directory
+Desktop/ Downloads/ Pictures/ snap/ nltk_data/
+
+
+
