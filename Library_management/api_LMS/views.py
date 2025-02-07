@@ -31,4 +31,7 @@ class Book_Details(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Book_details.objects.all()
     serializer_class = Book_detailsSerializer
+
+    def perform_create(self, serializer):
+        return serializer.save(added_by = self.request.user)
     

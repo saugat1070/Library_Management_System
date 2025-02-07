@@ -13,9 +13,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user.set_password(validated_data["password"])  
         user.save()
         return user
+
     
 class Book_detailsSerializer(serializers.ModelSerializer):
-    author_name = serializers.CharField(source='UserRegistration.first_name',read_only = True)
+    added_by = serializers.StringRelatedField(read_only = True)
+    
     class Meta:
-        model = Book_details.objects.all()
-        fields = ['book_name','date_of_publication','book_photo']
+        model = Book_details  
+        fields = ['book_name', 'date_of_publication', 'book_photo', 'author_name','added_by']
