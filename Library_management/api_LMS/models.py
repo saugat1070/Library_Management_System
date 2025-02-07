@@ -61,3 +61,14 @@ class UserRegistration(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return self.is_superuser  # Superusers have access to all modules
+    
+class Book_details(models.Model):
+    book_name = models.CharField(max_length=100)
+    author_name = models.CharField(max_length=40)
+    date_of_publication = models.DateField()
+    date_of_added = models.DateField(auto_now=True)
+    book_photo = models.ImageField(upload_to='book_details/')
+    added_by = models.ForeignKey(UserRegistration,on_delete=models.CASCADE,related_name='user_name')
+
+    def __str__(self):
+        return self.book_name
