@@ -72,3 +72,13 @@ class Book_details(models.Model):
 
     def __str__(self):
         return self.book_name
+    
+class IssueBook(models.Model):
+    issue_by = models.ForeignKey(UserRegistration, on_delete=models.CASCADE,null=False)
+    Date_of_issue = models.DateTimeField(auto_now_add=True)
+    name_of_book = models.ForeignKey(Book_details, on_delete=models.SET_NULL,null=True)
+    author_of_book = models.CharField(max_length=100,null=True)
+    college_name = models.CharField(max_length=100,null=True)
+
+    def __str__(self):
+        return self.issue_by
