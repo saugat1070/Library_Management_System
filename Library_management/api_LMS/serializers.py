@@ -26,6 +26,7 @@ class Book_detailsSerializer(serializers.ModelSerializer):
 class IssueBookSerializer(serializers.ModelSerializer):
     issue_by = serializers.StringRelatedField(read_only=True)
     author_of_book = serializers.StringRelatedField(read_only=True)
+    college_name = serializers.StringRelatedField(read_only = True)
     class Meta:
         model = IssueBook
         fields = '__all__'
