@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from api_LMS.models import UserRegistration
 from api_LMS.models import Book_details
+from api_LMS.models import IssueBook
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only = True)
@@ -21,3 +22,10 @@ class Book_detailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book_details  
         fields = ['book_name', 'date_of_publication', 'book_photo', 'author_name','added_by']
+
+class IssueBookSerializer(serializers.ModelSerializer):
+    issue_by = serializers.StringRelatedField(read_only=True)
+    author_of_book = serializers.StringRelatedField(read_only=True)
+    class Meta:
+        model = IssueBook
+        fields = '__all__'
