@@ -6,6 +6,9 @@ from api_LMS.models import Book_details
 from api_LMS.serializers import UserRegistrationSerializer
 from api_LMS.serializers import Book_detailsSerializer
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from api_LMS.models import IssueBook
+from api_LMS.serializers import IssueBookSerializer
 # Create your views here.
 
 def home(self):
@@ -34,4 +37,11 @@ class Book_Details(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save(added_by = self.request.user)
+    
+class IssueBook(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer = IssueBookSerializer
+
+    def get(self,request,format=None):
+        
     
