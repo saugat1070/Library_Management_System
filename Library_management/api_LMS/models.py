@@ -79,6 +79,6 @@ class IssueBook(models.Model):
     name_of_book = models.ForeignKey(Book_details, on_delete=models.SET_NULL,null=True)
     author_of_book = models.CharField(max_length=100,null=True)
     college_name = models.CharField(max_length=100,null=True)
-
+    
     def __str__(self):
         return self.issue_by
