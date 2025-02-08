@@ -62,15 +62,19 @@ class IssueBookView(generics.ListCreateAPIView):
     serializer_class = IssueBookSerializer
 
     def perform_create(self, serializer):
-        name_of_book = self.request.data.get('name_of_book')
+        book_id = self.request.data.get('name_of_book')
         author_of_book = None
         try:
-            book = Book_Details.objects.get(book_name=name_of_book)
-            author_name = book.author_name
+            book = Book_details.objects.get(id = int(book_id))
+            if book:
+                author_name = book.author_name
+            else:
+                print('book is not found')
         except:
             author_name = 'Unknown'
-        return serializer.save(issue_by=self.request.user,
+        serializer.save(issue_by=self.request.user,
                                author_of_book=author_name,
                                college_name=self.request.user.college_name)
+        return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
 
     
