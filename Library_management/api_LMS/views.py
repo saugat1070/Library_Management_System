@@ -40,26 +40,31 @@ class Book_Details(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         return serializer.save(added_by = self.request.user)
     
-class Update_Book(APIView):
-    permission_classes = [IsAuthenticated]
-    def get_object(self,pk):
-        try:
-            return Book_details.objects.get(pk = pk)
-        except:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+# class Update_Book(APIView):
+#     permission_classes = [IsAuthenticated]
+#     def get_object(self,pk):
+#         try:
+#             return Book_details.objects.get(pk = pk)
+#         except:
+#             return Response(status=status.HTTP_400_BAD_REQUEST)
         
-    def get(self,request,pk,format=None):
-        book = self.get_object(pk)
-        serializer = Book_detailsSerializer(book)
-        return Response(serializer.data)
+#     def get(self,request,pk,format=None):
+#         book = self.get_object(pk)
+#         serializer = Book_detailsSerializer(book)
+#         return Response(serializer.data)
     
-    def put(self,request,pk,format=None):
-        book = self.get_object(pk)
-        serializer = Book_detailsSerializer(book, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data,status=status.HTTP_200_OK)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+#     def put(self,request,pk,format=None):
+#         book = self.get_object(pk)
+#         serializer = Book_detailsSerializer(book, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data,status=status.HTTP_200_OK)
+#         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+class Update_Book(generics.RetrieveUpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Book_details.objects.all()
+    serializer_class = Book_detailsSerializer
+    lookup_field = 'pk'
 # class IssueBookView(APIView):
 #     permission_classes = [IsAuthenticated]
 
