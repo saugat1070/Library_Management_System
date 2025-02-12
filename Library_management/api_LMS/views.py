@@ -39,7 +39,7 @@ class Book_Details(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save(added_by = self.request.user)
-    
+# --> using APIview method
 # class Update_Book(APIView):
 #     permission_classes = [IsAuthenticated]
 #     def get_object(self,pk):
@@ -101,5 +101,8 @@ class IssueBookView(generics.ListCreateAPIView):
                                author_of_book=author_name,
                                college_name=self.request.user.college_name)
         return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
+
+class BookSubmission(APIView):
+    pass
 
     
