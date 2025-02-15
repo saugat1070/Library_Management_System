@@ -2,6 +2,7 @@ from rest_framework import serializers
 from api_LMS.models import UserRegistration
 from api_LMS.models import Book_details
 from api_LMS.models import IssueBook
+from api_LMS.models import Book_Submission
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only = True)
@@ -30,3 +31,11 @@ class IssueBookSerializer(serializers.ModelSerializer):
     class Meta:
         model = IssueBook
         fields = '__all__'
+class Book_SubmissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book_Submission
+        fields = ['issued_book','date_of_issue','date_of_submission','late_fee']
+        extra_kwargs = {'issued_book':{'read_only':True},
+                        'date_of_submission':{'read_only':True},
+                        'date_of_issue':{'read_only':True},
+                        'late_fee':{'read_only':True}}
