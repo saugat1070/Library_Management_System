@@ -84,14 +84,18 @@ class IssueBook(models.Model):
         return self.issue_by
     
 class Book_Submission(models.Model):
-    book_name = models.ForeignKey(IssueBook,
-                                     on_delete=models.SET_NULL,
-                                     related_name='book_submission',
-                                     null = True)
-    
+    issued_book =models.ForeignKey(IssueBook,on_delete=models.SET_NULL,related_name='book_issue',null=True,blank=True)
     date_of_issue = models.DateField()
     date_of_submission = models.DateField()
     late_fee = models.DecimalField(max_digits=5,decimal_places=2,null=True,blank=True)
+    submiited = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.book_name
+        return self.issued_book
+    
+class StaffDetails(models.Model):
+    staff_name = models.CharField(max_length=20)
+    time_of_login = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.staff_name
