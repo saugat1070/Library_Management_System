@@ -10,7 +10,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from api_LMS.models import IssueBook
 from api_LMS.serializers import IssueBookSerializer
+from api_LMS.models import Book_Submission
+from api_LMS.serializers import Book_SubmissionSerializer
 from rest_framework import status
+from api_LMS.serializers import Book_SubmissionSerializer
 # Create your views here.
 
 def home(self):
@@ -102,7 +105,17 @@ class IssueBookView(generics.ListCreateAPIView):
                                college_name=self.request.user.college_name)
         return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
 
+
 class BookSubmission(APIView):
-    pass
+    permission_classes = [IsAuthenticated]
+    
+    def get(self,request,format=None):
+        data = Book_Submission.objects.all()
+        serializer = Book_SubmissionSerializer(data, many = True)
+    
+    def post(self,request,format=None):
+        pass
+
+
 
     
