@@ -14,6 +14,12 @@ from api_LMS.models import Book_Submission
 from api_LMS.serializers import Book_SubmissionSerializer
 from rest_framework import status
 from api_LMS.serializers import Book_SubmissionSerializer
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import authenticate
+from rest_framework_simplejwt.tokens import AccessToken
 # Create your views here.
 
 def home(self):
@@ -28,6 +34,7 @@ class list_of_user(generics.ListAPIView):
     serializer_class = UserRegistrationSerializer
 
 class UserProfile(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes=[JWTAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = UserRegistrationSerializer
 
@@ -36,6 +43,7 @@ class UserProfile(generics.RetrieveUpdateDestroyAPIView):
 
         
 class Book_Details(generics.ListCreateAPIView):
+    authentication_classes=[JWTAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = Book_details.objects.all()
     serializer_class = Book_detailsSerializer
@@ -64,6 +72,7 @@ class Book_Details(generics.ListCreateAPIView):
 #             return Response(serializer.data,status=status.HTTP_200_OK)
 #         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 class Update_Book(generics.RetrieveUpdateAPIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = Book_details.objects.all()
     serializer_class = Book_detailsSerializer
@@ -85,8 +94,9 @@ class Update_Book(generics.RetrieveUpdateAPIView):
 #             return Response(serializer.data,status=status.HTTP_201_CREATED)
 #         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 class IssueBookView(generics.ListCreateAPIView):
-    queryset = IssueBook.objects.all()
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    queryset = IssueBook.objects.all()
     serializer_class = IssueBookSerializer
 
     def perform_create(self, serializer):
@@ -107,6 +117,7 @@ class IssueBookView(generics.ListCreateAPIView):
 
 
 class BookSubmission(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     
     def get(self,request,format=None):
@@ -115,5 +126,25 @@ class BookSubmission(APIView):
             
 
 
+class CustomJWTAuthToken(APIView):
 
-    
+    def post(self, request, *args, **kwargs):
+        email = request.data.get('email')
+        password = request.data.get('password')
+
+        if email is None or password is None:
+            return Response({'error': 'Email and password are required.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        user = authenticate(request, username=email, password=password)
+
+        if user is None:
+            return Response({'error': 'Invalid email or password.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        access_token = AccessToken.for_user(user)
+
+        return Response({
+            'access': str(access_token),
+            'user_id': user.pk,
+            'email': user.email,
+        })
