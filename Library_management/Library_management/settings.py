@@ -21,6 +21,17 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'api_LMS.UserRegistration'
 # Application definition
 
+#RestFul Api Framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api_LMS',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt'
 
 ]
 
