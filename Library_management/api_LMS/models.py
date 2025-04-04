@@ -67,7 +67,7 @@ class Book_details(models.Model):
     author_name = models.CharField(max_length=40)
     date_of_publication = models.DateField()
     date_of_added = models.DateField(auto_now=True)
-    book_photo = models.ImageField(upload_to='book_details/')
+    book_photo = models.ImageField(upload_to='book_details/', null=True )
     added_by = models.ForeignKey(UserRegistration,on_delete=models.CASCADE,related_name='user_name')
 
     def __str__(self):
