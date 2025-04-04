@@ -112,9 +112,7 @@ class BookSubmission(APIView):
     def get(self,request,format=None):
         data = Book_Submission.objects.all()
         serializer = Book_SubmissionSerializer(data, many = True)
-    
-    def post(self,request,format=None):
-        pass
+            
 
 
 
